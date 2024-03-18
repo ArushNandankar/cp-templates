@@ -3,17 +3,14 @@
 using namespace std;
 
 template <typename T, typename QueryType = function<T(T, T)>>
-class SparseTable
-{
+class SparseTable {
 private:
     vector<vector<T>> table;
     vector<int> log;
     int n;
     QueryType queryOp;
-
 public:
-    SparseTable(const vector<T> &input, const QueryType &queryOp) : queryOp(queryOp) // O(nlogn)
-    {
+    SparseTable(const vector<T> &input, const QueryType &queryOp) : queryOp(queryOp) {
         n = input.size();
         int maxLog = log2(n) + 1;
         table.resize(n, vector<T>(maxLog));
@@ -27,8 +24,7 @@ public:
             for (int i = 0; i + (1 << j) <= n; ++i)
                 table[i][j] = queryOp(table[i][j - 1], table[i + (1 << (j - 1))][j - 1]);
     }
-    T query(int l, int r)
-    {
+    T query(int l, int r) {
         assert(l <= r);
         assert(l >= 0);
         assert(r < n);

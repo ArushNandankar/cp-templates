@@ -20,10 +20,7 @@ public:
             tree[idx] = queryOp(tree[idx << 1], tree[idx << 1 | 1]);
     }
     T query(int l, int r) const {
-        T result = 0; // Change this default value based on the query type
-        // sum, xor, gcd -> 0
-        // max -> -INF
-        // min -> INF
+        T result = 0;
         for (l += n, r += n + 1; l < r; l >>= 1, r >>= 1) {
             if (l & 1)
                 result = queryOp(result, tree[l++]);

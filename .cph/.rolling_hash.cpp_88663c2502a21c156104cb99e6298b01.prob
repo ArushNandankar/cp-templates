@@ -1,0 +1,1 @@
+{"name":"Local: rolling_hash","url":"/Users/arushnandankar/Desktop/cp-templates/rolling_hash.cpp","tests":[{"id":1710784484929,"input":"7 5\naybabtu\n2 3 5\n1 3 x\n2 3 5\n1 5 x\n2 3 5","output":"YES\nNO\nYES"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/Users/arushnandankar/Desktop/cp-templates/rolling_hash.cpp","group":"local","local":true}
