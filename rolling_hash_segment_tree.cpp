@@ -7,20 +7,19 @@
 #define pnl cout << "\n"
 
 #define fast_io                  \
-    ios::sync_with_stdio(false); \
-    cin.tie(nullptr);            \
-    cout.tie(nullptr)
-#define testcases                \
-    int T;                       \
-    cin >> T;                    \
-    for (int t = 1; t <= T; t++) \
+	ios::sync_with_stdio(false); \
+	cin.tie(nullptr);            \
+	cout.tie(nullptr)
+#define testcases \
+	int T;        \
+	cin >> T;     \
+	for (int t = 1; t <= T; t++)
 
 using namespace std;
 using vi = vector<int>;
 using vvi = vector<vector<int>>;
 using pii = pair<int, int>;
 using vpii = vector<pair<int, int>>;
-
 
 // 1 indexed
 
@@ -52,8 +51,7 @@ T operator*(T a, T x) { return {(int)((long long)a[0] * x[0] % MOD[0]), (int)((l
 ostream &operator<<(ostream &os, T hash) { return os << "(" << hash[0] << ", " << hash[1] << ")"; }
 
 T pw[N], ipw[N];
-void prec()
-{
+void prec() {
 	pw[0] = {1, 1};
 	for (int i = 1; i < N; i++) {
 		pw[i] = pw[i - 1] * p;
@@ -64,8 +62,7 @@ void prec()
 		ipw[i] = ipw[i - 1] * ip;
 	}
 }
-struct Hashing
-{
+struct Hashing {
 	int n;
 	string s;			   // 1 - indexed
 	vector<array<T, 2>> t; // (normal, rev) hash
@@ -131,30 +128,45 @@ struct Hashing
 	}
 };
 
-void solve(int testcase) {
-    int n, m; cin >> n >> m;
-    string s; cin >> s;
-    prec();
-    Hashing rs(s);
-    while (m--) {
-        int t; cin >> t;
-        if (t == 1) {
-            int k; char x; cin >> k >> x;
-            rs.upd(k, x);
-        } else {
-            int l, r; cin >> l >> r;
-            if (rs.is_palindrome(l, r)) {
-                cout << "YES\n";
-            } else {
-                cout << "NO\n";
-            }
-        }
-    }
+void solve(int testcase)
+{
+	int n, m;
+	cin >> n >> m;
+	string s;
+	cin >> s;
+	prec();
+	Hashing rs(s);
+	while (m--)
+	{
+		int t;
+		cin >> t;
+		if (t == 1)
+		{
+			int k;
+			char x;
+			cin >> k >> x;
+			rs.upd(k, x);
+		}
+		else
+		{
+			int l, r;
+			cin >> l >> r;
+			if (rs.is_palindrome(l, r))
+			{
+				cout << "YES\n";
+			}
+			else
+			{
+				cout << "NO\n";
+			}
+		}
+	}
 }
 
-int32_t main() {
-    fast_io;
-    // testcases
-    solve(0);
-    return 0;
+int32_t main()
+{
+	fast_io;
+	// testcases
+	solve(0);
+	return 0;
 }
