@@ -3,30 +3,25 @@ using namespace std;
 
 /* Trie Template */
 const int ALPHABET_SIZE = 26;
-struct TrieNode
-{
+struct TrieNode {
     struct TrieNode *children[ALPHABET_SIZE];
     bool isEndOfWord;
 };
-struct TrieNode *getNode(void)
-{
+struct TrieNode *getNode(void) {
     struct TrieNode *pNode = new TrieNode;
     pNode->isEndOfWord = false;
     for (int i = 0; i < ALPHABET_SIZE; i++)
         pNode->children[i] = NULL;
     return pNode;
 }
-class Trie
-{
+class Trie {
 private:
     struct TrieNode *root;
 public:
-    Trie()
-    {
+    Trie() {
         root = getNode();
     }
-    void insert(string key)
-    {
+    void insert(string key) {
         struct TrieNode *pCrawl = root;
         for (int i = 0; i < key.length(); i++)
         {
@@ -37,11 +32,9 @@ public:
         }
         pCrawl->isEndOfWord = true;
     }
-    bool search(string key) const
-    {
+    bool search(string key) const {
         struct TrieNode *pCrawl = root;
-        for (int i = 0; i < key.length(); i++)
-        {
+        for (int i = 0; i < key.length(); i++) {
             int index = key[i] - 'a';
             if (!pCrawl->children[index])
                 return false;
@@ -50,10 +43,8 @@ public:
         return (pCrawl->isEndOfWord);
     }
 };
-/* Trie Template END */
 
-int main()
-{
+int main() {
     Trie t;
     t.insert("Hello");
     cout << t.search("Hello") << " " << t.search("World") << "\n";
