@@ -1,7 +1,6 @@
 const int M = 1000000007;
 template <int mod = M>
-struct ModInt
-{
+struct ModInt {
     using lint = long long;
     static int get_mod() { return mod; }
     static int get_primitive_root() {

@@ -74,7 +74,6 @@ struct Hashing {
         }
     }
     pair<int, int> get_hash(int l, int r) { 
-        ++l; ++r; // 1 - indexed
         assert(1 <= l && l <= r && r <= n);
         pair<int, int> ans;
         ans.first = (hs[r].first - hs[l - 1].first + MOD1) * 1LL * ipw[l - 1].first % MOD1;
