@@ -56,29 +56,6 @@ struct SuffixArray {
         for (k && k--, j = sa[rank[i] - 1];
         s[i + k] == s[j + k]; k++);
     }
-    int lower_bound(const string &t) {
-        int l = 1, r = sa.size();
-        while (l < r) {
-            int m = (l + r) / 2;
-            if (t <= ss.substr(sa[m], t.size())) r = m;
-            else l = m + 1;
-        }
-        return l;
-    }
-    int upper_bound(const string &t) {
-        int l = 1, r = sa.size();
-        while (l < r) {
-            int m = (l + r) / 2;
-            if (t < ss.substr(sa[m], t.size())) r = m;
-            else l = m + 1;
-        }
-        return l;
-    }
-    bool is_substring(const string &t) {
-        int l = lower_bound(t);
-        int r = upper_bound(t);
-        return r - l > 0;
-    }
 };
 
 void solve(int testcase) {

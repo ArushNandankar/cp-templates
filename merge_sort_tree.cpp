@@ -1,5 +1,7 @@
 // for everynode in the MST we will store a vector which will
 // keep the elements in the range in sorted order
+// this allowes us to query the number of elements in range [l, r] which are in range[ll, rr]
+// in O(logn * logn) time
 class Merge_Sort_Tree {
 private:
     vi A;

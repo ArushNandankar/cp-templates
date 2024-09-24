@@ -81,7 +81,7 @@ struct Hashing {
         return ans;
     }
     pair<int, int> get_hash() {
-        return get_hash(0, n - 1);
+        return get_hash(1, n);
     }
 };
 

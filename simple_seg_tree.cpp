@@ -5,7 +5,7 @@ using namespace std;
 template <typename T, typename QueryType = function<T(T, T)>>
 class SegmentTree {
 public:
-    SegmentTree(const vector<T> &input, const QueryType &queryOp) : queryOp(queryOp) {
+    SegmentTree(const vector<T> &input, T iden, const QueryType &queryOp) : iden(iden), queryOp(queryOp) {
         n = input.size();
         tree.resize(2 * n);
         for (int i = 0; i < n; ++i)
@@ -20,7 +20,7 @@ public:
             tree[idx] = queryOp(tree[idx << 1], tree[idx << 1 | 1]);
     }
     T query(int l, int r) const {
-        T result = 0;
+        T result = iden;
         for (l += n, r += n + 1; l < r; l >>= 1, r >>= 1) {
             if (l & 1)
                 result = queryOp(result, tree[l++]);
@@ -32,6 +32,7 @@ public:
 private:
     int n;
     vector<T> tree;
+    T iden;
     QueryType queryOp;
 };
 
