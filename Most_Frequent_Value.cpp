@@ -41,7 +41,7 @@ int n;
 vi a, freq, freqCnt;
 int maxFreq;
 
-void add(int ind) {
+inline void add(int ind) {
     int val = a[ind];
     freqCnt[freq[val]]--;
     freq[val]++;
@@ -49,7 +49,7 @@ void add(int ind) {
     maxFreq = max(maxFreq, freq[val]);
 }
 
-void del(int ind) {
+inline void del(int ind) {
     int val = a[ind];
     freqCnt[freq[val]]--;
     freq[val]--;
@@ -57,7 +57,7 @@ void del(int ind) {
     freqCnt[freq[val]]++;
 }
 
-int calc() {
+inline int calc() {
     return maxFreq;
 }
 

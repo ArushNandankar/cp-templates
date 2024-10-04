@@ -5,6 +5,7 @@
 #define int long long
 #define float double
 #define all(x) (x).begin(), (x).end()
+#define sz(x) (int)(x).size()
 #define pnl cout << "\n"
 #ifndef ONLINE_JUDGE
 #define dbg(x) cerr << (#x) << " " << (x) << "\n"
@@ -35,52 +36,28 @@ ostream &operator<<(ostream &out, vector<T> &a) {
 
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
-#define sz(x) (int)(x).size()
-#define rep(i, a, b) for(int i = a; i < (b); ++i)
-template<class T>
-struct RMQ {
-    vector<vector<T>> jmp;
-    RMQ(const vector<T>& V) : jmp(1, V) {
-        for (int pw = 1, k = 1; pw * 2 <= sz(V); pw *= 2, ++k) {
-            jmp.emplace_back(sz(V) - pw * 2 + 1);
-            rep(j, 0, sz(jmp[k]))
-                jmp[k][j] = min(jmp[k - 1][j], jmp[k - 1][j + pw]);
-        }
+vi generateGrayCode(int n) {
+    vi grayCode;
+    int len = 1 << n;  // 2^n
+    for (int i = 0; i < len; ++i) {
+        grayCode.push_back(i ^ (i >> 1));  // Generate Gray code
     }
-    T query(int a, int b) {
-        assert(a < b); // or return inf if a == b
-        int dep = 31 - __builtin_clz(b - a);
-        return min(jmp[dep][a], jmp[dep][b - (1 << dep)]);
-    }
-};
-struct LCA {
-    int T = 0;
-    vi time, path, ret;
-    RMQ<int> rmq;
-    LCA(vector<vi> &C) : time(sz(C)), rmq((dfs(C, 0, -1), ret)) {}
-    void dfs(vector<vi> &C, int v, int par) {
-        time[v] = T++;
-        for (int y : C[v]) if (y != par) {
-            path.push_back(v), ret.push_back(time[v]);
-            dfs(C, y, v);
-        }
-    }
-    int lca(int a, int b) {
-        if (a == b) return a;
-        tie(a, b) = minmax(time[a], time[b]);
-        return path[rmq.query(a, b)];
-    }
-};
+    return grayCode;
+}
 
 void solve(int testcase) {
-    
+    int n = 5;
+    vi grayCode = generateGrayCode(n);
+    for (int i = 0; i < sz(grayCode); ++i) {
+        cout << bitset<5>(grayCode[i]) << "\n";
+    }
 }
 
 int32_t main() {
     using namespace chrono;
     ios::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
     auto start = high_resolution_clock::now();
-    int T = 1; cin >> T;
+    int T = 1; // cin >> T;
     for (int t = 1; t <= T; t++) {
         solve(t);
     }

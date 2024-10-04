@@ -68,7 +68,6 @@ struct Node {
 };
 
 // kactl sum segment tree
-
 const int inf = numeric_limits<int>::max();
 struct Node {
     Node *l = 0, *r = 0;
