@@ -65,8 +65,7 @@ struct Hashing {
         n = _s.size();
         s = _s;
         hs.emplace_back(0, 0);
-        for (int i = 0; i < n; i++)
-        {
+        for (int i = 0; i < n; i++) {
             pair<int, int> p;
             p.first = (hs[i].first + 1LL * pw[i].first * s[i] % MOD1) % MOD1;
             p.second = (hs[i].second + 1LL * pw[i].second * s[i] % MOD2) % MOD2;

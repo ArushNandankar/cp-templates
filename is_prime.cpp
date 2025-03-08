@@ -3,8 +3,8 @@
 #include <ext/pb_ds/tree_policy.hpp>
 
 #define int long long
-#define float double
 #define all(x) (x).begin(), (x).end()
+#define sz(x) (int)(x).size()
 #define pnl cout << "\n"
 #ifndef ONLINE_JUDGE
 #define dbg(x) cerr << (#x) << " " << (x) << "\n"
@@ -35,44 +35,53 @@ ostream &operator<<(ostream &out, vector<T> &a) {
 
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
-#define rep(i, a, b) for(int i = a; i < (b); ++i)
-template<class T>
-struct RMQ {
-    vector<vector<T>> jmp;
-    RMQ(const vector<T>& V) : jmp(1, V) {
-        for (int pw = 1, k = 1; pw * 2 <= sz(V); pw *= 2, ++k) {
-            jmp.emplace_back(sz(V) - pw * 2 + 1);
-            rep(j, 0, sz(jmp[k]))
-                jmp[k][j] = min(jmp[k - 1][j], jmp[k - 1][j + pw]);
+/*
+Miller-Rabin primality test
+Determnistc for n < 4,759,123,141
+Time Complexity: O(log(n)^3)
+*/
+int safe_mod(int x, int m) {
+    x %= m;
+    if (x < 0) x += m;
+    return x;
+}
+int pow_mod(int x, int n, int m) {
+    if (m == 1) return 0;
+    unsigned int _m = (unsigned int)(m);
+    unsigned int r = 1;
+    unsigned int y = safe_mod(x, m);
+    while (n) {
+        if (n & 1) r = (r * y) % _m;
+        y = (y * y) % _m;
+        n >>= 1;
+    }
+    return r;
+}
+bool is_prime(int n) {
+    if (n <= 1) return false;
+    if (n == 2 || n == 7 || n == 61) return true;
+    if (n % 2 == 0) return false;
+    int d = n - 1;
+    while (d % 2 == 0) d /= 2;
+    int bases[3] = {2, 7, 61};
+    for (int a : bases) {
+        int t = d;
+        int y = pow_mod(a, t, n);
+        while (t != n - 1 && y != 1 && y != n - 1) {
+            y = y * y % n;
+            t <<= 1;
+        }
+        if (y != n - 1 && t % 2 == 0) {
+            return false;
         }
     }
-    T query(int a, int b) {
-        assert(a < b); // or return inf if a == b
-        int dep = 31 - __builtin_clz(b - a);
-        return min(jmp[dep][a], jmp[dep][b - (1 << dep)]);
-    }
-};
-struct LCA {
-    int T = 0;
-    vi time, path, ret;
-    RMQ<int> rmq;
-    LCA(vector<vi> &C) : time(sz(C)), rmq((dfs(C, 0, -1), ret)) {}
-    void dfs(vector<vi> &C, int v, int par) {
-        time[v] = T++;
-        for (int y : C[v]) if (y != par) {
-            path.push_back(v), ret.push_back(time[v]);
-            dfs(C, y, v);
-        }
-    }
-    int lca(int a, int b) {
-        if (a == b) return a;
-        tie(a, b) = minmax(time[a], time[b]);
-        return path[rmq.query(a, b)];
-    }
-};
+    return true;
+}
 
 void solve(int testcase) {
-    
+    int n; cin >> n;
+    if (is_prime(n)) cout << "YES\n";
+    else cout << "NO\n";
 }
 
 int32_t main() {

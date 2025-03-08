@@ -1,10 +1,11 @@
 #include <bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
+#include <atcoder/modint>
 
 #define int long long
-#define float double
 #define all(x) (x).begin(), (x).end()
+#define sz(x) (int)(x).size()
 #define pnl cout << "\n"
 #ifndef ONLINE_JUDGE
 #define dbg(x) cerr << (#x) << " " << (x) << "\n"
@@ -35,41 +36,27 @@ ostream &operator<<(ostream &out, vector<T> &a) {
 
 mt19937_64 rng(chrono::steady_clock::now().time_since_epoch().count());
 
-#define rep(i, a, b) for(int i = a; i < (b); ++i)
-template<class T>
-struct RMQ {
-    vector<vector<T>> jmp;
-    RMQ(const vector<T>& V) : jmp(1, V) {
-        for (int pw = 1, k = 1; pw * 2 <= sz(V); pw *= 2, ++k) {
-            jmp.emplace_back(sz(V) - pw * 2 + 1);
-            rep(j, 0, sz(jmp[k]))
-                jmp[k][j] = min(jmp[k - 1][j], jmp[k - 1][j + pw]);
-        }
+using mint = atcoder::modint998244353;
+template <typename T = mint>
+struct combinatorics {
+    vector<T> fact, ifact;
+    combinatorics(int n) : fact(n + 1), ifact(n + 1) {
+        assert(n >= 0);
+        fact[0] = 1;
+        for (int i = 1; i <= n; i++) fact[i] = fact[i - 1] * i;
+        ifact[n] = 1 / fact[n];
+        for (int i = n; i >= 1; i--) ifact[i - 1] = ifact[i] * i;
     }
-    T query(int a, int b) {
-        assert(a < b); // or return inf if a == b
-        int dep = 31 - __builtin_clz(b - a);
-        return min(jmp[dep][a], jmp[dep][b - (1 << dep)]);
+    T nCr(int n, int r) {
+        if (r < 0 || r > n) return 0;
+        return fact[n] * ifact[r] * ifact[n - r];
     }
-};
-struct LCA {
-    int T = 0;
-    vi time, path, ret;
-    RMQ<int> rmq;
-    LCA(vector<vi> &C) : time(sz(C)), rmq((dfs(C, 0, -1), ret)) {}
-    void dfs(vector<vi> &C, int v, int par) {
-        time[v] = T++;
-        for (int y : C[v]) if (y != par) {
-            path.push_back(v), ret.push_back(time[v]);
-            dfs(C, y, v);
-        }
-    }
-    int lca(int a, int b) {
-        if (a == b) return a;
-        tie(a, b) = minmax(time[a], time[b]);
-        return path[rmq.query(a, b)];
+    T nPr(int n, int r) {
+        if (r < 0 || r > n) return 0;
+        return fact[n] * ifact[n - r];
     }
 };
+combinatorics comb(2e6 + 5);
 
 void solve(int testcase) {
     

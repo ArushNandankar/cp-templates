@@ -10,12 +10,13 @@
  */
 #pragma once
 
+// kactl line container
+using ll = long long;
 struct Line {
     mutable ll k, m, p;
     bool operator<(const Line& o) const { return k < o.k; }
     bool operator<(ll x) const { return p < x; }
 };
-
 struct LineContainer : multiset<Line, less<>> {
     // (for doubles, use inf = 1/.0, div(a,b) = a/b)
     static const ll inf = LLONG_MAX;
